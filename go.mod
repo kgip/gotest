@@ -7,6 +7,7 @@ require (
 	github.com/go-sql-driver/mysql v1.6.0 // indirect
 	github.com/jinzhu/gorm v1.9.16 // indirect
 	github.com/jmoiron/sqlx v1.3.4 // indirect
+	github.com/satori/go.uuid v1.2.0 // indirect
 	github.com/smallnest/gen v0.9.29 // indirect
 	github.com/thep0y/go-logger v1.1.1 // indirect
 	github.com/yuin/goldmark v1.4.0 // indirect
