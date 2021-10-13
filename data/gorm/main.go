@@ -29,7 +29,7 @@ func main() {
 	//	})
 	//}
 	age := rand.Intn(20) + 10
-	row := dao.UserDao.InsertList([]*entity.User{
+	users := []*entity.User{
 		{
 			Name:   uuid.NewV4().String()[:8],
 			Age:    age,
@@ -42,7 +42,11 @@ func main() {
 			Gender: 1,
 			Birth:  time.Now().AddDate(-age, 0, 0),
 		},
-	})
-
+	}
+	row := dao.UserDao.InsertList(users)
 	fmt.Println(row)
+
+	for _, user := range users {
+		fmt.Printf("%v\n", user)
+	}
 }

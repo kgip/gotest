@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"reflect"
 	"unsafe"
 )
 
@@ -12,7 +11,7 @@ type slice struct {
 	len int // 长度
 	cap int // 容量
 }
- */
+*/
 /**
 type hmap struct {
 	count int
@@ -25,9 +24,13 @@ type hmap struct {
 	nevacuate uintptr
 	extra *mapextra
 }
- */
+*/
 func main() {
-	arr := [...]int{1,2,5,6,9,0}
+	arr := [...]int{1, 2, 5, 6, 9, 0}
+	pointer := unsafe.Pointer(&arr)
+	fmt.Printf("arr:%p,pointer:%p\n", &arr, pointer)
+	i := *(*int)(unsafe.Pointer(uintptr(pointer) + 8))
+	fmt.Println(i)
 	////fmt.Printf("%T",arr)
 	//fmt.Printf("数组首地址：%p\n",&arr[0])
 	////strings := make([]string, 0, 20)
@@ -57,21 +60,20 @@ func main() {
 
 	//str := "hello"
 
-
-	slice1 := []int{1,2,3}
-	sliceheader1 := (*reflect.SliceHeader)(unsafe.Pointer(&slice1))
-	sliceheader2 := &reflect.SliceHeader{
-		Data: sliceheader1.Data,
-		Len: sliceheader1.Len,
-		Cap: sliceheader1.Cap << 1,
-	}
-
-	sliceheader1.Data = uintptr(unsafe.Pointer(&arr))
-	sliceheader1.Len = len(arr)
-	sliceheader1.Cap = sliceheader1.Len << 1
-
-	slice2 := *(*[]int)(unsafe.Pointer(sliceheader2))
-	fmt.Printf("数组地址：%p\n",&arr)
-	fmt.Printf("%v;%p,len=%d,cap=%d\n",slice1,slice1,len(slice1),cap(slice1))
-	fmt.Printf("%v;%p,len=%d,cap=%d",slice2,slice2,len(slice2),cap(slice2))
+	//slice1 := []int{1,2,3}
+	//sliceheader1 := (*reflect.SliceHeader)(unsafe.Pointer(&slice1))
+	//sliceheader2 := &reflect.SliceHeader{
+	//	Data: sliceheader1.Data,
+	//	Len: sliceheader1.Len,
+	//	Cap: sliceheader1.Cap << 1,
+	//}
+	//
+	//sliceheader1.Data = uintptr(unsafe.Pointer(&arr))
+	//sliceheader1.Len = len(arr)
+	//sliceheader1.Cap = sliceheader1.Len << 1
+	//
+	//slice2 := *(*[]int)(unsafe.Pointer(sliceheader2))
+	//fmt.Printf("数组地址：%p\n",&arr)
+	//fmt.Printf("%v;%p,len=%d,cap=%d\n",slice1,slice1,len(slice1),cap(slice1))
+	//fmt.Printf("%v;%p,len=%d,cap=%d",slice2,slice2,len(slice2),cap(slice2))
 }

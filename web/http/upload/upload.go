@@ -8,12 +8,12 @@ import (
 	"os"
 )
 
-func saveFile(w http.ResponseWriter, r *http.Request)  {
+func SaveFile(w http.ResponseWriter, r *http.Request) {
 	file, header, err := r.FormFile("file")
 	defer file.Close()
 	if err != nil {
 		fmt.Println(err)
-		http.Error(w,http.StatusText(http.StatusInternalServerError),http.StatusInternalServerError)
+		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 		return
 	}
 	if err != nil {
@@ -23,14 +23,14 @@ func saveFile(w http.ResponseWriter, r *http.Request)  {
 	defer fd.Close()
 	if err != nil {
 		fmt.Println(err)
-		http.Error(w,http.StatusText(http.StatusInternalServerError),http.StatusInternalServerError)
+		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 		return
 	}
 
 	//buf := make([]byte,128)
 	//rw := bufio.NewReadWriter(bufio.NewReader(file),bufio.NewWriter(fd))
 
-	io.Copy(fd,file)
+	io.Copy(fd, file)
 	//for {
 	//	count, err := rw.Read(buf)
 	//	if err != nil {
@@ -44,10 +44,10 @@ func saveFile(w http.ResponseWriter, r *http.Request)  {
 
 func main() {
 	http.HandleFunc("/test/upload", func(w http.ResponseWriter, r *http.Request) {
-		saveFile(w,r)
+		SaveFile(w, r)
 	})
 	logger := log.NewLogger()
 	logger.Info("hhh")
 	logger.Error("hhh")
-	http.ListenAndServe(":8080",nil)
+	http.ListenAndServe(":8080", nil)
 }

@@ -3,7 +3,9 @@ package db
 import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
+	"time"
 )
 
 var (
@@ -17,7 +19,16 @@ func init() {
 		NamingStrategy: schema.NamingStrategy{
 			SingularTable: true,
 		},
+		Logger: logger.Default.LogMode(logger.Info),
 	})
+	sqlDB, err := db.DB()
+	if err != nil {
+		panic(err)
+	} else {
+		sqlDB.SetMaxIdleConns(100)
+		sqlDB.SetMaxOpenConns(150)
+		sqlDB.SetConnMaxLifetime(time.Hour)
+	}
 	if err != nil {
 		panic(err)
 	} else {
